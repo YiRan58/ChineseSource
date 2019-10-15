@@ -20,10 +20,10 @@ class Corpus extends Component {
                     vertical
                 >
                     <Navbar />
-                    <Tab style={{width: '80%', marginLeft: "10%"}} defaultActiveIndex={this.props.location.active?this.props.location.active:0} panes={panes}/>
+                    <Tab style={{width:"90%",marginLeft:"5%"}} defaultActiveIndex={this.props.location.active?this.props.location.active:0} panes={panes}/>
                 </Segment>
         )
     }
-}
+}// style={{width:"100%"}}
 
 export default Corpus

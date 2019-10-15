@@ -1,5 +1,15 @@
 import React, {Component} from 'react'
-import {Grid, Icon, Table, Header, Menu, Segment, Dropdown, Input, Container, List} from "semantic-ui-react";
+import {
+    Grid,
+    Table,
+    Header,
+    Segment,
+    Dropdown,
+    Input,
+    Container,
+    List,
+    Pagination
+} from "semantic-ui-react";
 
 export default class SelectBody extends Component {
     state = {
@@ -15,7 +25,9 @@ export default class SelectBody extends Component {
             {id: 2, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
             {id: 3, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
             {id: 4, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
-        ]
+        ],
+        pageInfo: undefined,
+        activePage: 1,
     }
 
     levelInfo() {
@@ -51,7 +63,8 @@ export default class SelectBody extends Component {
                 <List>
                     {
                         this.state.literature.map((item, index) =>
-                            <List.Item key = {index}><h3>[{index + 1}].{item.author}.{item.name}.{item.from}.{item.time}</h3>
+                            <List.Item key={index}>
+                                <h3>[{index + 1}].{item.author}.{item.name}.{item.from}.{item.time}</h3>
                             </List.Item>
                         )
                     }
@@ -63,7 +76,8 @@ export default class SelectBody extends Component {
                 <List>
                     {
                         this.state.literature.map((item, index) =>
-                            <List.Item key = {index}><h3>[{index + 1}].{item.author}.{item.name}.{item.from}.{item.time}</h3>
+                            <List.Item key={index}>
+                                <h3>[{index + 1}].{item.author}.{item.name}.{item.from}.{item.time}</h3>
                             </List.Item>
                         )
                     }
@@ -73,48 +87,66 @@ export default class SelectBody extends Component {
         </Container>
     }
 
+    handlePaginationChange = (e, {activePage}) => {
+        this.props.onValue(activePage)
+        this.setState({activePage})
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            pageInfo: nextProps.pageInfo
+        })
+    }
+
+    returnPagination() {
+        if (this.state.pageInfo != null) {
+            return <Pagination
+                totalPages={this.state.pageInfo.pageInfo.pages}
+                activePage={this.state.activePage}
+                onPageChange={this.handlePaginationChange}
+            />
+        } else
+            return false
+    }
+
+    returnTableBody() {
+        if (this.state.pageInfo != null) {
+            return <Table.Body>
+                {this.state.pageInfo.pageInfo.records.map(item=>
+                    <Table.Row  key={item.id}>
+                        <Table.Cell>
+                            <Header size='medium'>{item.data}</Header>
+                            {/*<Header size='small'>{item.from}</Header>*/}
+                        </Table.Cell>
+                    </Table.Row>
+                )}
+            </Table.Body>
+        } else
+            return false
+    }
+
 
     render() {
+
         if (this.props.literature) {
             return this.literature()
         }
 
         return (
-            <Grid.Column width={this.props.withoutOption ? 16 : 12}>
+
+
+            <Grid.Column width={this.props.withoutOption ? 16 : 8}>
                 {this.levelInfo()}
-                <Table style={{marginTop: "1%"}}>
+                <Table striped style={{marginTop: "1%"}}>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell><br/></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>{this.state.list.map(item =>
-                        <Table.Row key={item.id}>
-                            <Table.Cell>
-                                <Header size='medium'>{item.text}</Header>
-                                <Header size='small'>{item.from}</Header>
-                            </Table.Cell>
-                        </Table.Row>
-                    )}</Table.Body>
 
-                    <Table.Footer>
-                        <Table.Row>
-                            <Table.HeaderCell colSpan='3'>
-                                <Menu floated='right' pagination>
-                                    <Menu.Item as='a' icon>
-                                        <Icon name='chevron left'/>
-                                    </Menu.Item>
-                                    <Menu.Item as='a'>1</Menu.Item>
-                                    <Menu.Item as='a'>2</Menu.Item>
-                                    <Menu.Item as='a'>3</Menu.Item>
-                                    <Menu.Item as='a'>4</Menu.Item>
-                                    <Menu.Item as='a' icon>
-                                        <Icon name='chevron right'/>
-                                    </Menu.Item>
-                                </Menu>
-                            </Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Footer>
+                    {this.returnTableBody()}
+                    {this.returnPagination()}
+
                 </Table>
             </Grid.Column>
         )

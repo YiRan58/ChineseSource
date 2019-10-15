@@ -5,19 +5,6 @@ import {Grid, Image, Visibility, Segment,Container} from 'semantic-ui-react'
 import Carousel from 'rmc-m-carousel';
 
 const HomeLayout = () => {
-    const items = [{
-        image: require("../../assets/640.jpg"),
-        title: '图片1',
-    }, {
-        image: require("../../assets/641.jpg"),
-        title: '图片2',
-    }, {
-        image: require("../../assets/642.jpg"),
-        title: '图片3',
-    }, {
-        image: require("../../assets/643.jpg"),
-        title: '图片4',
-    }];
 
     return <Visibility
         once={false}
