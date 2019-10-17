@@ -1,7 +1,4 @@
 class Options {
-    constructor(){
-        const isLogin = false
-    }
 
 
     static getValues() {

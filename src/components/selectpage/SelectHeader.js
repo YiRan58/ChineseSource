@@ -4,6 +4,8 @@ import axios from 'axios'
 
 export default class SelectHeader extends Component {
     state = {
+        id: "",
+        level: "",
         options: [
             {key: '1', text: '关键词', value: '1'},
             {key: '2', text: '等级', value: '2'},
@@ -13,13 +15,13 @@ export default class SelectHeader extends Component {
         data: undefined
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //通过pros接收父组件传来的方法
         this.props.onRef(this)
     }
 
     haveSelect() {
-        if (this.props.option === true) {
+        if (this.props.id === "2") {
             return <Select compact options={this.state.options} defaultValue='1'/>
         }
         return null
@@ -32,7 +34,6 @@ export default class SelectHeader extends Component {
     }
 
     handleClick = () => {
-        console.log(this.props.filiter)
         this.search(this.props.filiter)
     }
 
@@ -72,17 +73,39 @@ export default class SelectHeader extends Component {
 
     render() {
 
+        if (this.props.id === '1') {
+            return (
+                <div>
+                    <Icon name={"search"}/>
+                    <Input size="large" type='text' placeholder='请输入检索项目'>
+                        <input style={{width: "300px"}}/>
+                        {this.haveSelect()}
+                        <Button >搜索</Button>
+                    </Input>
+                    <br/>
+                    <Button.Group  style={{width: "300px",marginTop: "1%"}}>
+                        <Button>初级</Button>
+                        <Button>中级</Button>
+                        <Button>高级</Button>
+                    </Button.Group>
+                </div>
+            )
+
+
+        }
+
+
         return (
 
             <div>
-                <Icon name={"search"}/>
+               {/* <Icon name={"search"}/>
                 <Input size="large" type='text' placeholder='请输入检索项目'>
                     <input style={{width: "300px"}}/>
                     {this.haveSelect()}
                     <Button onClick={() => {
                         this.handleClick()
                     }}>搜索</Button>
-                </Input>
+                </Input>*/}
             </div>
             //</Container>
         )

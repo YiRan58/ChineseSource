@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export default class Data extends Component {
     state = {
+        id:'',
         activeItem: '',
         data: [],
         info: ''
@@ -57,10 +58,10 @@ export default class Data extends Component {
 
     render() {
 
-        if(this.props.isTrue)
+        if(this.props.id === "2")
             return (
                 <Grid.Column width={4}>
-                    <Container style={{height:"800px",width:"80%",overflow:"auto"}}>
+                    <Container style={{height:"750px",width:"80%",overflow:"auto"}}>
                     {<Menu vertical>
                         {this.state.data.map(item =>
                             <Menu.Item key={item.grammarPointId}
@@ -79,7 +80,7 @@ export default class Data extends Component {
         else{
                 return (
                     <Grid.Column width={4}>
-                        <Container style={{height:"800px",width:"80%",overflow:"auto"}}>
+                        <Container style={{height:"750px",width:"80%",overflow:"auto"}}>
 
 
                         </Container>

@@ -5,12 +5,22 @@ import SearchBox from "./common/searchBox";
 
 class Corpus extends Component {
 
+
+    /**
+     *
+     * 1 -> 中介语语料
+     * 2 -> 汉语教材语料
+     * 3 -> 语法项目信息检索
+     * 4 -> 文献推荐
+     *
+     */
+
     render() {
         const panes = [
-            {menuItem: '中介语语料', render: () => <Tab.Pane><SearchBox literature={false} option={[true, "level", "article"]} withoutOption={false}/></Tab.Pane>},
-            {menuItem: '汉语教材语料', render: () => <Tab.Pane><SearchBox literature={false} option={[true, "level", "corpus"]} withoutOption={false}/></Tab.Pane>},
-            {menuItem: '语法项目信息检索', render: () => <Tab.Pane><SearchBox literature={false} withoutOption={true}/></Tab.Pane>},
-            {menuItem: '文献推荐', render: () => <Tab.Pane><SearchBox  literature={true}  withoutOption={true}/></Tab.Pane>},
+            {menuItem: '中介语语料', render: () => <Tab.Pane><SearchBox id={"1"}/></Tab.Pane>},
+            {menuItem: '汉语教材语料', render: () => <Tab.Pane><SearchBox id={"2"}/></Tab.Pane>},
+            {menuItem: '语法项目信息检索', render: () => <Tab.Pane><SearchBox id={"3"}/></Tab.Pane>},
+            {menuItem: '文献推荐', render: () => <Tab.Pane><SearchBox  id={"4"}/></Tab.Pane>},
         ]
 
         return (
@@ -24,6 +34,6 @@ class Corpus extends Component {
                 </Segment>
         )
     }
-}// style={{width:"100%"}}
+}
 
 export default Corpus

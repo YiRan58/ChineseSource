@@ -13,13 +13,7 @@ import {
 
 export default class SelectBody extends Component {
     state = {
-        list: [
-            {id: 1, text: "你已经在北京呆了二十年了，你当然知道的比我多", from: "来源：这件旗袍比那件漂亮"},
-            {id: 2, text: "同时分析比字句谓语项跟比较结果、比较属性、比较差值以及比较点、比较专项之间的关系", from: "来源：这件旗袍比那件漂亮"},
-            {id: 3, text: "这个句式是A和B的比较，A比B 怎么样的意思", from: "来源：这件旗袍比那件漂亮"},
-            {id: 4, text: "李连杰比姚明矮", from: "来源：这件旗袍比那件漂亮"},
-            {id: 5, text: "“不比”只用在不同意对方的说话时才", from: "来源：这件旗袍比那件漂亮"},
-        ],
+        id: '',
         literature: [
             {id: 1, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
             {id: 2, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
@@ -112,11 +106,10 @@ export default class SelectBody extends Component {
     returnTableBody() {
         if (this.state.pageInfo != null) {
             return <Table.Body>
-                {this.state.pageInfo.pageInfo.records.map(item=>
-                    <Table.Row  key={item.id}>
+                {this.state.pageInfo.pageInfo.records.map(item =>
+                    <Table.Row key={item.id}>
                         <Table.Cell>
                             <Header size='medium'>{item.data}</Header>
-                            {/*<Header size='small'>{item.from}</Header>*/}
                         </Table.Cell>
                     </Table.Row>
                 )}
@@ -127,28 +120,66 @@ export default class SelectBody extends Component {
 
 
     render() {
-
         if (this.props.literature) {
             return this.literature()
         }
 
-        return (
+        if (this.props.id === '1')
+            return this.return1st()
+        if (this.props.id === '2')
+            return this.return2nd()
+        else
+            return (
+                <Grid.Column width={16}>
+                    {this.levelInfo()}
+                    <Table striped style={{marginTop: "1%"}}>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell><br/></Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
 
+                        {this.returnTableBody()}
+                        {this.returnPagination()}
 
-            <Grid.Column width={this.props.withoutOption ? 16 : 8}>
-                {this.levelInfo()}
-                <Table striped style={{marginTop: "1%"}}>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell><br/></Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-
-                    {this.returnTableBody()}
-                    {this.returnPagination()}
-
-                </Table>
-            </Grid.Column>
-        )
+                    </Table>
+                </Grid.Column>
+            )
     }
+
+
+    //1 -> 中介语语料
+    return1st = () => (
+        <Grid.Column width={16}>
+            {this.levelInfo()}
+            <Table striped style={{marginTop: "1%"}}>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell><br/></Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                {this.returnTableBody()}
+                {this.returnPagination()}
+
+            </Table>
+        </Grid.Column>)
+
+    //2 -> 汉语教材语料
+    return2nd = () => (
+        <Grid.Column width={8}>
+            {this.levelInfo()}
+            <Table striped style={{marginTop: "1%"}}>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell><br/></Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                {this.returnTableBody()}
+                {this.returnPagination()}
+
+            </Table>
+        </Grid.Column>
+    )
 }

@@ -47,7 +47,8 @@ export default class LoginModal extends Component {
                                 </Form.Field>
                                 <Form.Field required>
                                     <label>验证邮箱</label>
-                                    <Input fluid icon='envelope' iconPosition='left' placeholder='输入验证码'>
+                                    {/*<Input fluid icon='envelope' iconPosition='left' placeholder='输入验证码'>*/}
+                                    <Input fluid iconPosition='left' placeholder='输入验证码'>
                                         <Icon name='envelope'/>
                                         <input type="text"/>
                                         <Button content={"发送邮件"}/>
