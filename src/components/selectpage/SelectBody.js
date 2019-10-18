@@ -14,6 +14,7 @@ import {
 export default class SelectBody extends Component {
     state = {
         id: '',
+        loading:false,
         literature: [
             {id: 1, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
             {id: 2, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
@@ -21,7 +22,7 @@ export default class SelectBody extends Component {
             {id: 4, author: "史欣艳", name: ".现代汉语差比范畴研究述评[J].", from: "牡丹江大学学报", time: ",2019,28(05):17-20"},
         ],
         pageInfo: undefined,
-        activePage: 1,
+        activePage: "",
     }
 
     levelInfo() {
@@ -87,10 +88,21 @@ export default class SelectBody extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        if(nextProps.id !== this.props.id){
+            this.setState({
+                pageInfo: undefined,
+                activePage: 1
+            })
+            return
+        }
+
         this.setState({
-            pageInfo: nextProps.pageInfo
+            pageInfo: nextProps.pageInfo,
+            activePage: 1
         })
     }
+
 
     returnPagination() {
         if (this.state.pageInfo != null) {
@@ -138,11 +150,9 @@ export default class SelectBody extends Component {
                                 <Table.HeaderCell><br/></Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
-
                         {this.returnTableBody()}
-                        {this.returnPagination()}
-
                     </Table>
+                    {this.returnPagination()}
                 </Grid.Column>
             )
     }
@@ -150,7 +160,7 @@ export default class SelectBody extends Component {
 
     //1 -> 中介语语料
     return1st = () => (
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
             {this.levelInfo()}
             <Table striped style={{marginTop: "1%"}}>
                 <Table.Header>
@@ -158,11 +168,9 @@ export default class SelectBody extends Component {
                         <Table.HeaderCell><br/></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
-
                 {this.returnTableBody()}
-                {this.returnPagination()}
-
             </Table>
+            {this.returnPagination()}
         </Grid.Column>)
 
     //2 -> 汉语教材语料

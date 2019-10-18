@@ -10,19 +10,15 @@ class SearchBox extends Component {
         id: '',
         info: '',
         option: {},
-        pageInfo: undefined
+        pageInfo: undefined,
+        level:undefined
     }
 
-
-    /*componentWillReceiveProps(nextProps) { // 父组件重传props时就会调用这个方法
-        if (this.props.id !== this.state.id){
-            this.setState({pageInfo: undefined, option: {}});
-        }
-    }*/
 
     getChildValue(value) {
         let option = this.state.option;
         option.activeItem = value.activeItem
+        option.current = 1
         this.setState({
             info: value.info,
             option: option
@@ -35,6 +31,7 @@ class SearchBox extends Component {
         let option = this.state.option;
         option.s = value.s
         option.t = value.t
+        option.current = 1
         this.setState({
             option: option
         })
@@ -60,7 +57,19 @@ class SearchBox extends Component {
 
     onRef = (ref) => {
         this.childSelect = ref
+        this.setState({
+            level: ref.state.level
+        })
     }
+
+    setLevel= level=>{
+        this.setState({
+            level
+        })
+    }
+
+
+
 
     render() {
 
@@ -84,10 +93,10 @@ class SearchBox extends Component {
     //1 -> 中介语语料
     return1st = () => (
         <Container fluid>
-            <SelectHeader onRef={this.onRef} onValue={this.getPageInfo.bind(this)} filiter={this.state.option}
+            <SelectHeader onRef={this.onRef} setLevel={this.setLevel} onValue={this.getPageInfo.bind(this)} filiter={this.state.option}
                           id={this.props.id}/>
             <Grid>
-                {/*<Data id={this.props.id}/>*/}
+                <Data id={this.props.id} level={this.state.level} onValue={this.getChildValue.bind(this)}/>
                 <SelectBody id={this.props.id} onValue={this.getBodyInfo.bind(this)} pageInfo={this.state.pageInfo}/>
               {/*  <SelectOptions onValue={this.getOptionValue.bind(this)} info={this.state.info}
                                option={this.props.option}/>*/}

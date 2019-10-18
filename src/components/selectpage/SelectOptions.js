@@ -30,7 +30,8 @@ export default class SelectOptions extends Component {
 
     handleValue(value){
 
-        if(value === '')
+
+        if(value === ''||!value)
             return false;
         let optionS = []
         let optionT = [];

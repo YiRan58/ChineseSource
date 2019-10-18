@@ -62,22 +62,22 @@ const HomeLayout = () => {
                 <Grid.Column/>
                 <Grid.Column
                     children={
-                        <CustomeCard img={<Image src={require("../../assets/01.jpg")} style={{height: "200px"}} fuild/>}
+                        <CustomeCard img={<Image src={require("../../assets/01.jpg")} style={{height: "200px"}} />}
                                      content="中介语语料" active={0}/>}
                 />
                 <Grid.Column
                     children={<CustomeCard
-                        img={<Image src={require("../../assets/02.jpg")} style={{height: "200px"}} fuild/>}
+                        img={<Image src={require("../../assets/02.jpg")} style={{height: "200px"}} />}
                         content="汉语教材语料" active={1}/>}
                 />
                 <Grid.Column
                     children={<CustomeCard
-                        img={<Image src={require("../../assets/03.jpg")} style={{height: "200px"}} fuild/>}
+                        img={<Image src={require("../../assets/03.jpg")} style={{height: "200px"}} />}
                         content="语法项目信息检索" active={2}/>}
                 />
                 <Grid.Column
                     children={<CustomeCard
-                        img={<Image src={require("../../assets/04.jpg")} style={{height: "200px"}} fuild/>}
+                        img={<Image src={require("../../assets/04.jpg")} style={{height: "200px"}} />}
                         content="文献推荐" active={3}/>}
                 />
                 <Grid.Column/>

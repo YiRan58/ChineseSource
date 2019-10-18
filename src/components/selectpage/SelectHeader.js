@@ -5,7 +5,7 @@ import axios from 'axios'
 export default class SelectHeader extends Component {
     state = {
         id: "",
-        level: "",
+        level: "1",
         options: [
             {key: '1', text: '关键词', value: '1'},
             {key: '2', text: '等级', value: '2'},
@@ -38,38 +38,90 @@ export default class SelectHeader extends Component {
     }
 
     search(value) {
-        console.log()
         let that = this
         if (value != null) {
             //先存一下this，以防使用箭头函数this会指向我们不希望它所指向的对象。
-            axios.post('http://47.102.104.94:8080/data/list', {
-                "current": value.current == null ? 1 : value.current,
-                "size": "10",
-                "grammarPointId": value.activeItem,
-                "value": value.s,
-                "example": value.t
-            })
-                .then(function (response) {
-                    console.log(response.data.data)
+            if (this.props.id === '2') {
+                axios.post('http://47.102.104.94:8080/data/list', {
+                    "current": value.current == null ? 1 : value.current,
+                    "size": "10",
+                    "grammarPointId": value.activeItem,
+                    "value": value.s,
+                    "example": value.t
+                }).then(function (response) {
                     that.setState({
                         data: response.data.data,
                         isLoaded: true
                     });
 
                 }).then(function () {
-                that.props.onValue({pageInfo: that.state.data,})
-            })
-                .catch(function (error) {
+                    that.props.onValue({pageInfo: that.state.data,})
+                }).catch(function (error) {
                     console.log(error);
                     that.setState({
                         isLoaded: false,
                         error: error
                     })
                 })
+            } else if (this.props.id === '1') {
+                this.getMediumData(value)
+            }
+
         }
         return false
     }
 
+    getMediumData(value) {
+        let that = this
+        axios.post('http://localhost:8080/medium/data', {
+            "current": value.current == null ? 1 : value.current,
+            "size": "1",
+            "level": this.state.level,
+            "title": value.activeItem
+        }).then(function (response) {
+            that.setState({
+                data: response.data.data,
+                isLoaded: true
+            });
+
+        }).then(function () {
+            that.props.onValue({pageInfo: that.state.data,})
+        }).catch(function (error) {
+            console.log(error);
+            that.setState({
+                isLoaded: false,
+                error: error
+            })
+        })
+    }
+
+
+    handleButtonClick = (level) => {
+        this.setState({level: level})
+        let that = this
+        axios.post('http://localhost:8080/medium/data', {
+            "current": 1,
+            "size": "1",
+            "level": level
+        }).then(function (response) {
+            that.setState({
+                data: response.data.data,
+                isLoaded: true
+            });
+
+        }).then(function () {
+            that.props.onValue({pageInfo: that.state.data,})
+        }).catch(function (error) {
+            console.log(error);
+            that.setState({
+                isLoaded: false,
+                error: error
+            })
+        })
+        const {setLevel} = this.props;
+
+        setLevel(level);
+    }
 
     render() {
 
@@ -80,13 +132,13 @@ export default class SelectHeader extends Component {
                     <Input size="large" type='text' placeholder='请输入检索项目'>
                         <input style={{width: "300px"}}/>
                         {this.haveSelect()}
-                        <Button >搜索</Button>
+                        <Button>搜索</Button>
                     </Input>
                     <br/>
-                    <Button.Group  style={{width: "300px",marginTop: "1%"}}>
-                        <Button>初级</Button>
-                        <Button>中级</Button>
-                        <Button>高级</Button>
+                    <Button.Group style={{width: "300px", marginTop: "1%"}}>
+                        <Button active={this.state.level === '1'} onClick={() => this.handleButtonClick(1)}>初级</Button>
+                        <Button active={this.state.level === '2'} onClick={() => this.handleButtonClick(2)}>中级</Button>
+                        <Button active={this.state.level === '3'} onClick={() => this.handleButtonClick(3)}>高级</Button>
                     </Button.Group>
                 </div>
             )
@@ -96,18 +148,8 @@ export default class SelectHeader extends Component {
 
 
         return (
-
             <div>
-               {/* <Icon name={"search"}/>
-                <Input size="large" type='text' placeholder='请输入检索项目'>
-                    <input style={{width: "300px"}}/>
-                    {this.haveSelect()}
-                    <Button onClick={() => {
-                        this.handleClick()
-                    }}>搜索</Button>
-                </Input>*/}
             </div>
-            //</Container>
         )
     }
 

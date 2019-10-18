@@ -33,7 +33,7 @@ class Navbar extends Component {
         }
         return (
             <Menu
-                fixed={this.props.fixed}
+                /*fixed={this.props.fixed}*/
                 inverted={true}
                 pointing={true}
                 size='large'
